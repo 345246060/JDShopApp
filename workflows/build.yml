@@ -1,0 +1,38 @@
+name: Build Electron App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Python dependencies
+        run: |
+          cd python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Package app with electron-builder
+        run: |
+          npm run build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-app
+          path: dist/*.exe
