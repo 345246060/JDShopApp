@@ -1,0 +1,54 @@
+{
+  "name": "jdshopapp",
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "JD Shop App with Electron + FastAPI",
+  "author": "your-name",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^29.1.2",
+    "electron-builder": "^24.6.0"
+  },
+  "build": {
+    "appId": "com.jdshop.app",
+    "productName": "JDShopApp",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/*.map",
+      "!**/tests"
+    ],
+    "extraResources": [
+      {
+        "from": "python/",
+        "to": "python",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "JDShopApp"
+    }
+  }
+}
